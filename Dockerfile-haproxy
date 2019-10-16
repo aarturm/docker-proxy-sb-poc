@@ -1,5 +1,4 @@
 FROM haproxy
-WORKDIR 
-COPY 
-RUN 
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+
 
