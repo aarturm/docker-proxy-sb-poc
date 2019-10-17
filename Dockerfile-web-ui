@@ -10,4 +10,4 @@ WORKDIR /app
 
 COPY  --from=builder /usr/src/mymaven/spring-boot-samples/spring-boot-sample-web-ui/target/*jar web-ui.jar
 EXPOSE 8080
-CMD exec java $JAVA_OPTS -jar /app/web-ui.jar
+CMD exec java $JAVA_OPTS -jar /app/web-ui.jar --server.servlet.context-path=/ui

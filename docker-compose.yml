@@ -5,19 +5,17 @@ services:
    context: .
    dockerfile: Dockerfile-web-ui
   
-
  web-static:
   build:
    context: .
    dockerfile: Dockerfile-web-static
   
-
  proxy:
   build:
    context: .
    dockerfile: Dockerfile-haproxy
   ports:
-   - "8080:9000"
+   - "9000:9000"
   depends_on:
    - "web-ui"
    - "web-static"
