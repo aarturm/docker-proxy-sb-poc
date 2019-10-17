@@ -1,5 +1,5 @@
 #### Stage 1: Build the application
-FROM maven as builder
+FROM maven:3.6.2 as builder
 WORKDIR /usr/src/mymaven
 COPY spring-boot /usr/src/mymaven
 RUN mvn -f spring-boot-samples/spring-boot-sample-web-ui/pom.xml clean install	
