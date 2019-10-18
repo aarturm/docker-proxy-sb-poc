@@ -1,14 +1,16 @@
-version: "3"
+version: "3.5"
 services:
- web-ui:
-  build:
-   context: .
-   dockerfile: Dockerfile-web-ui
-  
  web-static:
   build:
    context: .
-   dockerfile: Dockerfile-web-static
+   dockerfile: Dockerfile-apps
+   target: web-static
+  
+ web-ui:
+  build:
+   context: .
+   dockerfile: Dockerfile-apps
+   target: web-ui
   
  proxy:
   build:
@@ -19,4 +21,3 @@ services:
   depends_on:
    - "web-ui"
    - "web-static"
-  
