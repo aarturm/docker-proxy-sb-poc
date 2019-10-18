@@ -1,0 +1,18 @@
+#### Stage 1: Build the application
+FROM maven:3.6.2 as builder
+WORKDIR /usr/src/mymaven
+COPY spring-boot /usr/src/mymaven
+RUN mvn -f spring-boot-samples/spring-boot-sample-web-static/pom.xml clean install
+RUN mvn -f spring-boot-samples/spring-boot-sample-web-ui/pom.xml clean install
+
+#### Stage 2: Create images for apps
+FROM tomcat:8.5.47 as web-static
+RUN rm -fr /usr/local/tomcat/webapps/ROOT.war; rm -fr /usr/local/tomcat/webapps/ROOT/
+COPY --from=builder /usr/src/mymaven/spring-boot-samples/spring-boot-sample-web-static/target/*war /usr/local/tomcat/webapps/ROOT.war
+EXPOSE 8080
+
+FROM openjdk:8-jre-alpine as web-ui
+WORKDIR /app
+COPY  --from=builder /usr/src/mymaven/spring-boot-samples/spring-boot-sample-web-ui/target/*jar web-ui.jar
+CMD exec java $JAVA_OPTS -jar /app/web-ui.jar --server.servlet.context-path=/ui
+EXPOSE 8080
